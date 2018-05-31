@@ -8,6 +8,8 @@
 	// If you installed via composer, just use this code to requrie autoloader on the top of your projects.
 	require 'vendor/autoload.php';
 
+	require 'ParserDom.php';
+
 	// Using Medoo namespace
 	use Medoo\Medoo;
 
@@ -31,7 +33,7 @@
     		'database_name' => 'sjt',
     		'server' => 'localhost',
     		'username' => 'root',
-    		'password' => 'root'
+    		'password' => 'sjt3953395'
 		]);
 		return $database;
 	}
