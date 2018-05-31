@@ -2,14 +2,11 @@
 	//地址：/tts
 
 	//日志分析
-	ini_set("display_errors", On);
-	ini_set("error_reporting", E_ALL);
+	// ini_set("display_errors", On);
+	// ini_set("error_reporting", E_ALL);
 	
 	//引入通用php
 	include '../infoCommon.php';
-
-	//引入dom框架
-	include '../tools/ParserDom.php';
 
 	$shijianting = $_POST['shijianting'];
 	$niuxiang = $_POST['niuxiang'];
