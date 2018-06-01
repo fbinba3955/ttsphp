@@ -8,10 +8,10 @@
 	//解决中文乱码
 	//echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
 	//引入抓取框架 
-	include '../tools/Snoopy.class.php';
+	include '../Snoopy.class.php';
 
-	//引入dom框架
-	include '../tools/ParserDom.php';
+	//引入通用php
+	include '../infoCommon.php';
 	//初始化snoopy
 	$snoopy = new Snoopy();
 
