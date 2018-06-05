@@ -15,8 +15,8 @@
 	foreach ($songlist as $song) {
 		$songname = str_replace(array('songs/', '.mp3'), '', $song);
 		$one = array('name'=>$songname, 
-			'music'=>'http://139.162.36.106/music/songs/' . $songname . '.mp3', 
-			'cover'=>'http://139.162.36.106/music/songs/' . $songname . '.jpg');
+			'music'=>'http://139.162.36.106/ttsphp/music/songs/' . $songname . '.mp3', 
+			'cover'=>'http://139.162.36.106/ttsphp/music/songs/' . $songname . '.jpg');
 		array_push($songs, $one);
 	}
 
