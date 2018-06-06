@@ -1,10 +1,10 @@
-<?php 
+<?php
 	//地址：/tts
 
 	//日志分析
 	// ini_set("display_errors", On);
 	// ini_set("error_reporting", E_ALL);
-	
+
 	//引入通用php
 	include '../infoCommon.php';
 
@@ -40,11 +40,14 @@
 
 		$missions = $htmlParse->find('tr.text-center');
 
+		//插入数据库
+		insertZenTaoTable($missions, $user);
+
 		$resultStr = '';
 
 		$resultStr = $resultStr . $user . '<br>';
 
-		if (!empty($content) && count(missions) > 0) {
+		if (!empty($content) && count($missions) > 0) {
 			foreach ($missions as $mission) {
 				$resultStr = $resultStr . $mission->outerHtml() . '<br>';
 			}
@@ -59,6 +62,56 @@
 			return $resultStr;
 		}
 
-		
+
+	}
+
+	//插入数据库
+	function insertZenTaoTable($missions, $user) {
+		$db = getDBObject();
+		foreach ($missions as $mission) {
+			//先查询数据库中是否有同样id的
+			$items = $mission->find('td');
+			$id = $items[0]->find('a', 0)->getPlainText();
+			$level = $items[1]->find('span', 0)->getPlainText();
+			$iteration = $items[2]->find('a', 0)->getPlainText();
+			$name = $items[3]->find('a', 0)->getPlainText();
+			$plan = $items[4]->getPlainText();
+			$comsume = $items[5]->getPlainText();
+			$remind = $items[6]->getPlainText();
+			$deadline = $items[7]->getPlainText();
+			$status = $items[8]->getPlainText();
+
+			//如果存在
+			if ($db->has('table_zentao_missions', ['id'=>$id])) {
+				$db->update('table_zentao_missions', [
+					'level'=>$level,
+					'iteration'=>$iteration,
+					'name'=>$name,
+					'plantime'=>$plan,
+					'consumetime'=>$comsume,
+					'remindtime'=>$remind,
+					'deadline'=>$deadline,
+					'status'=>$status,
+					'user'=>$user
+				], [
+					'id'=>$id
+				]);
+			}
+			else{
+				$db->insert('table_zentao_missions', [
+					'id'=>$id,
+					'level'=>$level,
+					'iteration'=>$iteration,
+					'name'=>$name,
+					'plantime'=>$plan,
+					'consumetime'=>$comsume,
+					'remindtime'=>$remind,
+					'deadline'=>$deadline,
+					'status'=>$status,
+					'user'=>$user
+				]);
+			}
+
+		}
 	}
 ?>
