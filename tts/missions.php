@@ -14,7 +14,7 @@
 </head>
 <body>
 
-	<table id="example" class="display">
+	<table id="table_zentao" class="display">
 		<thead>
         <tr>
             <th>id</th>
@@ -31,15 +31,39 @@
 	<script>
 	     $(document).ready(function() {
 				 var data = <?php
-				 //引入通用php
-				 include '../infoCommon.php';
-				 $db = getDBObject();
-				 $datas = $db->select('table_zentao_missions','*');
-				 echo json_encode($datas) . ';';
+				 	//引入通用php
+				 	include '../infoCommon.php';
+				 	$db = getDBObject();
+				 	$datas = $db->select('table_zentao_missions','*');
+				 	echo json_encode($datas) . ';';
 				 ?>
-	       $('#example').DataTable({
-					 "paging":false,
-					 "order":[[5, 'desc']],
+	       $('#table_zentao').DataTable({
+					 	"paging":false,
+					 	"order":[[2, "desc"],[5, "desc"]],
+					 	"columnDefs":[{
+	            "visible": false,
+	            "targets": 2
+	        	},{
+      		 		"targets": [ 2 ],
+      		 		"orderData": [ 2, 5 ]
+    		 		}],
+					 "drawCallback": function(settings) {
+            	var api = this.api();
+            	var rows = api.rows({
+                	page: 'current'
+            	}).nodes();
+            	var last = null;
+
+            	api.column(2, {
+                	page: 'current'
+            	}).data().each(function(group, i) {
+                	if (last !== group) {
+                    $(rows).eq(i).before('<tr class="group"><td colspan="5"><b style="font-size:24px;color:#00f">' + group + '</b></td></tr>');
+
+                    last = group;
+                	}
+            	});
+        	},
 					 data: data,
         		columns: [
             	{ data: 'id' },
@@ -55,6 +79,18 @@
 							render: function(data, type, row, meta) {
 								if (data == "已完成") {
 									return "<label style='color:#0f0'>"+data+"</label>";
+								}
+								else if (data == "进行中"){
+									return "<label style='color:#f00'>"+data+"</label>";
+								}
+								else if (data == "未开始") {
+									return "<label style='color:#f00'>"+data+"</label>";
+								}
+								else if (data == "已暂停") {
+									return "<label style='color:#aaa'>"+data+"</label>";
+								}
+								else if (data == "已取消") {
+									return "<label style='color:#aaa'>"+data+"</label>";
 								}
 								else {
 									return "<label style='color:#f00'>"+data+"</label>";

@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 	// Import PHPMailer classes into the global namespace
 	// These must be at the top of your script, not inside a function
 	use PHPMailer\PHPMailer\PHPMailer;
 	use PHPMailer\PHPMailer\Exception;
-	
+
 	// If you installed via composer, just use this code to requrie autoloader on the top of your projects.
 	require 'vendor/autoload.php';
 
@@ -62,52 +62,52 @@
 
 	//控制台打印
 	//调试后需要删除，否则会影响json数据
-	function console($data)  
-	{  
-    	if (is_array($data) || is_object($data))  
-    	{  
-        	echo("<script>console.log('".json_encode($data)."');</script>");  
-    	}  
-    	else  
-    	{  
-        echo("<script>console.log('".$data."');</script>");  
-    	}  
+	function console($data)
+	{
+    	if (is_array($data) || is_object($data))
+    	{
+        	echo("<script>console.log('".json_encode($data)."');</script>");
+    	}
+    	else
+    	{
+        echo("<script>console.log('".$data."');</script>");
+    	}
 	}
 
 	//遍历文件夹--返回目录与文件带路径
 	function read_files_path($dir) {
-		$files=array();  
-    	$queue=array($dir);  
-    	while($data=each($queue)){  
-        	$path=$data['value'];  
-        	if(is_dir($path) && $handle=opendir($path)){  
-            	while($file=readdir($handle)){  
-                	if($file=='.'||$file=='..') continue;  
-                	$files[] = $real_path=$path.'/'.$file;  
-                	if (is_dir($real_path)) $queue[] = $real_path;  
-            	}  
-        	}  
-        	closedir($handle);  
-    	}  
-     	return $files;  
+		$files=array();
+    	$queue=array($dir);
+    	while($data=each($queue)){
+        	$path=$data['value'];
+        	if(is_dir($path) && $handle=opendir($path)){
+            	while($file=readdir($handle)){
+                	if($file=='.'||$file=='..') continue;
+                	$files[] = $real_path=$path.'/'.$file;
+                	if (is_dir($real_path)) $queue[] = $real_path;
+            	}
+        	}
+        	closedir($handle);
+    	}
+     	return $files;
 	}
 
 	//遍历文件夹--返回目录与文件
 	function read_files_withoutpath($dir) {
-		$files=array();  
-    	$queue=array($dir);  
-    	while($data=each($queue)){  
-        	$path=$data['value'];  
-        	if(is_dir($path) && $handle=opendir($path)){  
-            	while($file=readdir($handle)){  
-                	if($file=='.'||$file=='..') continue;  
-                	$files[] = $real_path=$file;  
-                	if (is_dir($real_path)) $queue[] = $real_path;  
-            	}  
-        	}  
-        	closedir($handle);  
-    	}  
-     	return $files;  
+		$files=array();
+    	$queue=array($dir);
+    	while($data=each($queue)){
+        	$path=$data['value'];
+        	if(is_dir($path) && $handle=opendir($path)){
+            	while($file=readdir($handle)){
+                	if($file=='.'||$file=='..') continue;
+                	$files[] = $real_path=$file;
+                	if (is_dir($real_path)) $queue[] = $real_path;
+            	}
+        	}
+        	closedir($handle);
+    	}
+     	return $files;
 	}
 
 
@@ -115,6 +115,12 @@
 	function read_mp3_files($dir) {
    		$files = glob($dir . "*.mp3");//获取/tmp/目录下的所有目录和文件
    		return $files;
+	}
+
+	//遍历文件夹下指定类型文件--单文件名
+	function read_files_type($dir, $type) {
+		$files = glob($dir . "*." . $type);//获取/tmp/目录下的所有目录和文件
+		return $files;
 	}
 
 	//获取文件md5值 32位
