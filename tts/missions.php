@@ -96,6 +96,11 @@
 									return "<label style='color:#f00'>"+data+"</label>";
 								}
 							}
+						},{
+							targets: 5,
+							render: function(data, type, row, meta) {
+
+							}
 						}]
 				 });
 	      });

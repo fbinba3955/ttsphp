@@ -135,6 +135,32 @@
 		return $size;
 	}
 
+	//比较两个日期
+	//true data1>data2
+	//false data1<data2
+	function compareDate($data1, $data2) {
+		 // 日期1是否大于日期2
+		 $month1 = date("m", strtotime($date1));
+		 $month2 = date("m", strtotime($date2));
+		 $day1 = date("d", strtotime($date1));
+		 $day2 = date("d", strtotime($date2));
+		 $year1 = date("Y", strtotime($date1));
+		 $year2 = date("Y", strtotime($date2));
+		 $from = mktime(0, 0, 0, $month1, $day1, $year1);
+		 $to = mktime(0, 0, 0, $month2, $day2, $year2);
+		 if ($from > $to) {
+		 return true;
+		 } else {
+		 return false;
+		 }
+	}
+
+	//获取当前日期
+	function getNowDate() {
+		$time = time();
+		return date("y-m-d",$time);
+	}
+
 	//使用shijianting001@sohu.com账户发送邮件
 	//return 是否发送成功
 	function send_email($receiver, $title, $body) {
