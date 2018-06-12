@@ -17,6 +17,10 @@
 
 	$result_final = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
 
+	$db = getDBObject();
+	//清空任务表
+	$db->query('DELETE FROM table_zentao_missions');
+
 	$result_final = $result_final . formateContent($shijianting, '史健廷');
 	$result_final = $result_final . formateContent($niuxiang, '牛翔');
 	$result_final = $result_final . formateContent($cuiliqing, '崔丽青');
@@ -68,6 +72,7 @@
 	//插入数据库
 	function insertZenTaoTable($missions, $user) {
 		$db = getDBObject();
+
 		foreach ($missions as $mission) {
 			//先查询数据库中是否有同样id的
 			$items = $mission->find('td');
